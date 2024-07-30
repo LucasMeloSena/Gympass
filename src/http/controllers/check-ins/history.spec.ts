@@ -13,7 +13,7 @@ describe('Get CheckIn History Controller (e2e)', () => {
     vi.useRealTimers();
   });
 
-  it.only('should be able to get the check-ins history', async () => {
+  it('should be able to get the check-ins history', async () => {
     let { token, cookies } = await createAndAuthenticateUser(app, Role.ADMIN);
     vi.setSystemTime(new Date());
 
