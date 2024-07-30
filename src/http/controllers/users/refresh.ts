@@ -23,5 +23,5 @@ export async function refresh(req: Request, res: Response, _: NextFunction) {
 
     return res.status(200).json({ token });
   }
-  return res.status(403).json({message: 'Token expired.'})
+  return res.status(403).json({ message: 'Token expired.' });
 }
