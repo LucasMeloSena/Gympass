@@ -10,7 +10,7 @@ export async function register(req: Request, res: Response, next: NextFunction) 
       name: z.string(),
       email: z.string().email(),
       password: z.string().min(6),
-      role: z.enum([Role.MEMBER, Role.ADMIN]).optional()
+      role: z.enum([Role.MEMBER, Role.ADMIN]).optional(),
     });
 
     const { name, email, password, role } = registerBodySchema.parse(req.body);
@@ -20,7 +20,7 @@ export async function register(req: Request, res: Response, next: NextFunction) 
       name,
       email,
       password,
-      role
+      role,
     });
 
     res.status(201).json({ message: 'User successfully created.' });

@@ -7,7 +7,7 @@ interface CreateUserUseCaseRequest {
   name: string;
   email: string;
   password: string;
-  role?: Role
+  role?: Role;
 }
 
 interface CreateUserUseCaseResponse {
@@ -29,7 +29,7 @@ export class CreateUserUseCase {
       name,
       email,
       password_hash,
-      role
+      role,
     });
 
     return {

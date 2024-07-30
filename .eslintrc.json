@@ -1,8 +1,24 @@
 {
-  "extends": [
-    //"@rocketseat/eslint-config/node"
-  ],
-  "roles": {
-    "no-useless-constructor": "off"
+  "extends": ["prettier", "@rocketseat/eslint-config/node"],
+  "rules": {
+    "no-useless-constructor": "off",
+    "camelcase": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 220,
+        "singleQuote": true,
+        "semi": true
+      }
+    ]
   }
 }

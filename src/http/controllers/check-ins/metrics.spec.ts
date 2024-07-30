@@ -14,8 +14,8 @@ describe('Get User CheckIns Metrics Controller (e2e)', () => {
   });
 
   it('should be able to get the user check-ins metrics', async () => {
-    const { token } = await createAndAuthenticateUser(app, Role.MEMBER);
     vi.setSystemTime(new Date());
+    let { token, cookies } = await createAndAuthenticateUser(app, Role.ADMIN);
 
     const gymResponse = await request(app).post('/gyms').set('Authorization', `Bearer ${token}`).send({
       name: 'JavaScript Gym',
@@ -31,6 +31,9 @@ describe('Get User CheckIns Metrics Controller (e2e)', () => {
     });
 
     vi.advanceTimersByTime(90000000);
+
+    const refreshTokenResponse = await request(app).patch('/token/refresh').set('Cookie', cookies!).send();
+    token = refreshTokenResponse.body.token;
 
     await request(app).post(`/gyms/${gymResponse.body.gym.id}/check-ins`).set('Authorization', `Bearer ${token}`).send({
       latitude: -19.9760093,

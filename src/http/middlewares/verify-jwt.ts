@@ -29,7 +29,7 @@ export function jwtSignIn({ role, userId }: CustomPayload, expiresIn: string) {
 
   const payload = {
     sub: userId,
-    role: role,
+    role,
     iat: Math.floor(Date.now() / 1000),
   };
 

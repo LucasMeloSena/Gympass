@@ -35,7 +35,7 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
       secure: true,
       sameSite: true,
     });
-    
+
     return res.status(200).json({ token });
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {

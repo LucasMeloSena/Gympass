@@ -7,7 +7,7 @@ export async function createAndAuthenticateUser(app: Express, role: Role) {
     name: 'John Doe',
     email: 'johndoe@example.com',
     password: '123456',
-    role
+    role,
   });
 
   const authResponse = await request(app).post('/sessions').send({
@@ -16,7 +16,9 @@ export async function createAndAuthenticateUser(app: Express, role: Role) {
   });
 
   const { token } = authResponse.body;
+  const cookies = authResponse.get('Set-Cookie');
   return {
     token,
+    cookies,
   };
 }

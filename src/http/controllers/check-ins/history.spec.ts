@@ -14,7 +14,7 @@ describe('Get CheckIn History Controller (e2e)', () => {
   });
 
   it('should be able to get the check-ins history', async () => {
-    const { token } = await createAndAuthenticateUser(app, Role.MEMBER);
+    let { token, cookies } = await createAndAuthenticateUser(app, Role.ADMIN);
     vi.setSystemTime(new Date());
 
     const gymResponse = await request(app).post('/gyms').set('Authorization', `Bearer ${token}`).send({
@@ -31,6 +31,9 @@ describe('Get CheckIn History Controller (e2e)', () => {
     });
 
     vi.advanceTimersByTime(90000000);
+
+    const refreshTokenResponse = await request(app).patch('/token/refresh').set('Cookie', cookies!).send();
+    token = refreshTokenResponse.body.token;
 
     await request(app).post(`/gyms/${gymResponse.body.gym.id}/check-ins`).set('Authorization', `Bearer ${token}`).send({
       latitude: -19.9760093,
