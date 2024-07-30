@@ -13,7 +13,3 @@ I also used some <b> Design Patterns </b> like SOLID and Refresh Token
 * [Vitest:](https://vitest.dev/) JavaScript testing framework for unit and integration tests.
 * [Docker:](https://www.docker.com/) Open source software used to deploy applications inside virtual containers
 * [Continuous integration:](https://github.com/features/actions) Automates all software workflows
-
-## 💻 Usage
-You can access the project from this <a href="https://cook-now-client.vercel.app/"> link </a>
-
