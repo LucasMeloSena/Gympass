@@ -12,7 +12,7 @@ describe('Fetch Nearby Gyms Use Case', () => {
   });
 
   it('should be able to fetch nearby gyms', async () => {
-    const sla = await gymsRepository.create({
+    await gymsRepository.create({
       name: 'Near Gym',
       description: null,
       phone: null,

@@ -5,9 +5,9 @@ import { Request, Response, NextFunction } from 'express';
 export function verifyUserRole(roleToVerify: Role) {
   return async (req: Request, res: Response, next: NextFunction) => {
     const { role } = req.user as ReqUser;
-    if (role != roleToVerify) {
+    if (role !== roleToVerify) {
       return res.status(401).json({ message: 'Unauthorized.' });
     }
-    return next()
+    return next();
   };
 }

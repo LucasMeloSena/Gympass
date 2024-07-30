@@ -16,7 +16,6 @@ describe('Refresh Token Controller (e2e)', () => {
     });
 
     const cookies = authResponse.get('Set-Cookie');
-
     const response = await request(app).patch('/token/refresh').set('Cookie', cookies!).send();
 
     expect(response.statusCode).toBe(200);

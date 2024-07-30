@@ -15,7 +15,7 @@ userRoutes(app);
 gymsRoutes(app);
 checkInsRoutes(app);
 
-app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+app.use((err: Error, _req: Request, res: Response, _: NextFunction) => {
   if (err instanceof ZodError) {
     return res.status(400).json({
       message: 'Validation error',
@@ -23,10 +23,10 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     });
   }
 
-  if (env.NODE_ENV != 'production') {
+  if (env.NODE_ENV !== 'production') {
     console.error(err);
   } else {
-    //TODO
+    // TODO
   }
   return res.status(500).json({ message: 'Internal server error.' });
 });
