@@ -5,11 +5,14 @@ import { ZodError } from 'zod';
 import { env } from './env';
 import { gymsRoutes } from './http/controllers/gyms/routes';
 import { checkInsRoutes } from './http/controllers/check-ins/routes';
+import cors from 'cors';
 
 export const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(cors());
 
 userRoutes(app);
 gymsRoutes(app);

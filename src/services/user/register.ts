@@ -7,6 +7,7 @@ interface CreateUserUseCaseRequest {
   name: string;
   email: string;
   password: string;
+  phone: string;
   role?: Role;
 }
 
@@ -17,7 +18,7 @@ interface CreateUserUseCaseResponse {
 export class CreateUserUseCase {
   constructor(private usersRepository: UserRepository) {}
 
-  async execute({ name, email, password, role }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
+  async execute({ name, email, password, phone, role }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
     const password_hash = await hash(password, 6);
 
     const userWithSameEmail = await this.usersRepository.findByEmail(email);
@@ -29,6 +30,7 @@ export class CreateUserUseCase {
       name,
       email,
       password_hash,
+      phone,
       role,
     });
 

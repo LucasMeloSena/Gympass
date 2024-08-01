@@ -8,6 +8,7 @@ describe('Refresh Token Controller (e2e)', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      phone: '(31) 9 0000-0000',
     });
 
     const authResponse = await request(app).post('/sessions').send({
