@@ -17,10 +17,18 @@ export class InMemoryGymsRepository implements GymsRepository {
     const gym = {
       id: data.id ?? randomUUID(),
       name: data.name,
+      image: data.image,
       description: data.description ?? null,
       phone: data.phone ?? null,
+      email: data.email,
       latitude: new Decimal(data.latitude.toString()),
       longitude: new Decimal(data.longitude.toString()),
+      state: data.state,
+      city: data.city,
+      district: data.district,
+      street: data.street,
+      adress_number: data.adress_number,
+      adress_addition: data.adress_addition ?? null,
     };
     this.items.push(gym);
     return gym;

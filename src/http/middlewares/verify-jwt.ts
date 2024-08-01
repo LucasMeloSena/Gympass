@@ -16,7 +16,6 @@ export async function verifyJWT(req: Request, res: Response, next: NextFunction)
     }
     throw new MissingAuthHeaderError();
   } catch (err) {
-    console.log((err as Error).message);
     if (err instanceof MissingAuthHeaderError) {
       return res.status(400).json({ message: err.message });
     }

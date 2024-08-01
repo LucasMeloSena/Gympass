@@ -10,16 +10,18 @@ export async function register(req: Request, res: Response, next: NextFunction) 
       name: z.string(),
       email: z.string().email(),
       password: z.string().min(6),
+      phone: z.string().min(16).max(16),
       role: z.enum([Role.MEMBER, Role.ADMIN]).optional(),
     });
 
-    const { name, email, password, role } = registerBodySchema.parse(req.body);
+    const { name, email, password, phone, role } = registerBodySchema.parse(req.body);
 
     const registerUserUseCase = makeCreateUserUseCase();
     await registerUserUseCase.execute({
       name,
       email,
       password,
+      phone,
       role,
     });
 
