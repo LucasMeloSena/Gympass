@@ -29,7 +29,7 @@ export class CheckInUseCase {
 
     const distance = getDistanceBetweenCoordinates({ latitude: userLatitude, longitude: userLongitude }, { latitude: gym.latitude.toNumber(), longitude: gym.longitude.toNumber() });
 
-    const max_distance_in_km = 0.1;
+    const max_distance_in_km = 0.5;
     if (distance > max_distance_in_km) {
       throw new MaxDistanceError();
     }

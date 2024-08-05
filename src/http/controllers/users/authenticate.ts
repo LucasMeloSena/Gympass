@@ -26,7 +26,7 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
       password,
     });
 
-    const token = jwtSignIn({ role: user.role, userId: user.id }, '1h');
+    const token = jwtSignIn({ role: user.role, userId: user.id }, '10s');
     const refreshToken = jwtSignIn({ role: user.role, userId: user.id }, '7d');
 
     res.cookie('refreshToken', refreshToken, {

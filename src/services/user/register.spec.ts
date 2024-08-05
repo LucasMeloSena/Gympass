@@ -18,6 +18,7 @@ describe('Register Use Case', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      phone: '(31) 9 0000-0000',
     });
 
     expect(user).toHaveProperty('id');
@@ -28,6 +29,7 @@ describe('Register Use Case', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      phone: '(31) 9 0000-0000',
     });
 
     const isPasswordCorrectlyHash = await compare('123456', user.password_hash);
@@ -41,6 +43,7 @@ describe('Register Use Case', () => {
       name: 'John Doe',
       email,
       password: '123456',
+      phone: '(31) 9 0000-0000',
     });
 
     await expect(() =>
@@ -48,6 +51,7 @@ describe('Register Use Case', () => {
         name: 'John Doe',
         email,
         password: '123456',
+        phone: '(31) 9 0000-0001',
       }),
     ).rejects.toBeInstanceOf(UserAlreadyExistsError);
   });

@@ -5,7 +5,7 @@ import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-
 import { Role } from '@prisma/client';
 
 describe('Search Gym Controller (e2e)', () => {
-  it('should be able to create a gym', async () => {
+  it('should be able to search gyms', async () => {
     const { token } = await createAndAuthenticateUser(app, Role.ADMIN);
 
     await request(app).post('/gyms').set('Authorization', `Bearer ${token}`).send({
@@ -48,6 +48,8 @@ describe('Search Gym Controller (e2e)', () => {
         page: 1,
       })
       .send();
+
+    console.log(response.body);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.gyms).toHaveLength(1);

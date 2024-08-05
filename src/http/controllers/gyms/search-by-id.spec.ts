@@ -4,11 +4,11 @@ import { app } from '@/app';
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
 import { Role } from '@prisma/client';
 
-describe('Create Gym Controller (e2e)', () => {
+describe('Search Gym Controller (e2e)', () => {
   it('should be able to create a gym', async () => {
     const { token } = await createAndAuthenticateUser(app, Role.ADMIN);
 
-    const response = await request(app).post('/gyms').set('Authorization', `Bearer ${token}`).send({
+    const gymResponse = await request(app).post('/gyms').set('Authorization', `Bearer ${token}`).send({
       name: 'JavaScript Gym',
       image: 'https://gujsp.com.br/wp-content/uploads/2017/09/smart-fit-academia-unidade-shopping-castanheira-belem-pa-1-recepcao.jpg',
       description: 'Some description',
@@ -24,6 +24,13 @@ describe('Create Gym Controller (e2e)', () => {
       adress_addition: 'loja 2',
     });
 
-    expect(response.statusCode).toBe(201);
+    const response = await request(app).get(`/gym/${gymResponse.body.gym.id}`).set('Authorization', `Bearer ${token}`).send();
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.gym).toEqual(
+      expect.objectContaining({
+        name: 'JavaScript Gym',
+      }),
+    );
   });
 });

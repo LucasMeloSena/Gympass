@@ -14,18 +14,34 @@ describe('Search Gyms Use Case', () => {
   it('should be able to search for gyms', async () => {
     await gymsRepository.create({
       name: 'JavaScript Gym',
-      description: null,
-      phone: null,
+      image: 'https://gujsp.com.br/wp-content/uploads/2017/09/smart-fit-academia-unidade-shopping-castanheira-belem-pa-1-recepcao.jpg',
+      description: 'Some description',
+      phone: '(32) 9 0129-1292',
+      email: 'javascriptgym@example.com',
       latitude: -19.9760093,
-      longitude: -43.9734746,
+      longitude: -43.9712307,
+      state: 'Minas Gerais',
+      city: 'Belo Horizonte',
+      district: 'Buritis',
+      street: 'Maria Heilbuth Surette',
+      adress_number: '643',
+      adress_addition: 'loja 2',
     });
 
     await gymsRepository.create({
-      name: 'Typescript Gym',
-      description: null,
-      phone: null,
+      name: 'TypeScript Gym',
+      image: 'https://gujsp.com.br/wp-content/uploads/2017/09/smart-fit-academia-unidade-shopping-castanheira-belem-pa-1-recepcao.jpg',
+      description: 'Some description',
+      phone: '(32) 9 0129-1292',
+      email: 'typescriptgym@example.com',
       latitude: -19.9760093,
-      longitude: -43.9734746,
+      longitude: -43.9712307,
+      state: 'Minas Gerais',
+      city: 'Belo Horizonte',
+      district: 'Buritis',
+      street: 'Maria Heilbuth Surette',
+      adress_number: '643',
+      adress_addition: 'loja 2',
     });
 
     const { gyms } = await sut.execute({
@@ -40,10 +56,18 @@ describe('Search Gyms Use Case', () => {
     for (let i = 1; i <= 22; i++) {
       await gymsRepository.create({
         name: `JavaScript Gym ${i}`,
-        description: null,
-        phone: null,
+        image: 'https://gujsp.com.br/wp-content/uploads/2017/09/smart-fit-academia-unidade-shopping-castanheira-belem-pa-1-recepcao.jpg',
+        description: 'Some description',
+        phone: '(32) 9 0129-1292',
+        email: 'javascriptgym@example.com',
         latitude: -19.9760093,
-        longitude: -43.9734746,
+        longitude: -43.9712307,
+        state: 'Minas Gerais',
+        city: 'Belo Horizonte',
+        district: 'Buritis',
+        street: 'Maria Heilbuth Surette',
+        adress_number: '643',
+        adress_addition: 'loja 2',
       });
     }
 

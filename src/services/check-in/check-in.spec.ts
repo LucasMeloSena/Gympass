@@ -16,11 +16,19 @@ describe('Check-in Use Case', () => {
 
     await gymsRepository.create({
       id: 'gym1',
-      name: 'Academia 1',
-      description: 'Descrição Academia 1',
-      phone: '(11) 9 8872-9012',
+      name: 'JavaScript Gym',
+      image: 'https://gujsp.com.br/wp-content/uploads/2017/09/smart-fit-academia-unidade-shopping-castanheira-belem-pa-1-recepcao.jpg',
+      description: 'Some description',
+      phone: '(32) 9 0129-1292',
+      email: 'javascriptgym@example.com',
       latitude: new Decimal(-19.9760093),
       longitude: new Decimal(-43.9712307),
+      state: 'Minas Gerais',
+      city: 'Belo Horizonte',
+      district: 'Buritis',
+      street: 'Maria Heilbuth Surette',
+      adress_number: '643',
+      adress_addition: 'loja 2',
     });
 
     vi.useFakeTimers();
@@ -84,11 +92,19 @@ describe('Check-in Use Case', () => {
   it('should not be able to check-in on a distant gym', async () => {
     await gymsRepository.create({
       id: 'gym2',
-      name: 'Academia 2',
-      description: 'Descrição Academia 2',
-      phone: '(11) 9 8972-9012',
+      name: 'JavaScript Gym',
+      image: 'https://gujsp.com.br/wp-content/uploads/2017/09/smart-fit-academia-unidade-shopping-castanheira-belem-pa-1-recepcao.jpg',
+      description: 'Some description',
+      phone: '(32) 9 0129-1292',
+      email: 'javascriptgym@example.com',
       latitude: new Decimal(-19.9760093),
       longitude: new Decimal(-43.9734746),
+      state: 'Minas Gerais',
+      city: 'Belo Horizonte',
+      district: 'Buritis',
+      street: 'Maria Heilbuth Surette',
+      adress_number: '643',
+      adress_addition: 'loja 2',
     });
 
     await expect(() =>
