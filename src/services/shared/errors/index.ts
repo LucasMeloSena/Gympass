@@ -6,5 +6,5 @@ export enum ServerError {
   MaxDistanceForCheckIn = 'MAX_DISTANCE_FOR_CHECK_IN',
   MissingAuthHeader = 'MISSING_AUTH_HEADER',
   ResourceNotFound = 'RESOURCE_NOT_FOUND',
-  UserAlreadyExists = 'USER_ALREADY_EXISTS'
+  UserAlreadyExists = 'USER_ALREADY_EXISTS',
 }
