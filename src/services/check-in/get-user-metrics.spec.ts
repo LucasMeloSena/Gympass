@@ -17,15 +17,23 @@ describe('Get User Metrics Use Case', () => {
       gym_id: 'gym1',
     });
 
-    await checkInsRepository.create({
+    const checkIn = await checkInsRepository.create({
       user_id: 'user1',
       gym_id: 'gym2',
     });
 
-    const { checkInsCount } = await sut.execute({
+    await checkInsRepository.save({
+      ...checkIn,
+      validated_at: new Date(),
+    });
+
+    const { checkInsCount, checkInsCountByMonth } = await sut.execute({
       userId: 'user1',
     });
 
+    const currentMonth = new Date().getMonth();
+
     expect(checkInsCount).toEqual(2);
+    expect(checkInsCountByMonth[currentMonth].count).toEqual(1);
   });
 });

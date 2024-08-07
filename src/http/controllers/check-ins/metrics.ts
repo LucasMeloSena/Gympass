@@ -7,11 +7,11 @@ export async function metrics(req: Request, res: Response, next: NextFunction) {
     const { sub } = req.user as ReqUser;
 
     const getCheckInUserMetricsUseCase = makeGetUserMetricsUseCase();
-    const { checkInsCount } = await getCheckInUserMetricsUseCase.execute({
+    const { checkInsCount, checkInsCountByMonth } = await getCheckInUserMetricsUseCase.execute({
       userId: sub,
     });
 
-    res.status(200).json({ checkInsCount });
+    res.status(200).json({ checkInsCount, checkInsCountByMonth });
   } catch (err) {
     next(err);
   }

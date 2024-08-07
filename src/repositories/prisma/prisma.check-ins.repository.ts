@@ -56,6 +56,9 @@ export class PrismaCheckInRepository implements CheckInsRepository {
     const count = await prisma.checkIn.count({
       where: {
         user_id: userId,
+        validated_at: {
+          not: null,
+        },
       },
     });
 
@@ -70,5 +73,31 @@ export class PrismaCheckInRepository implements CheckInsRepository {
     });
 
     return checkIn;
+  }
+
+  async findByMonthAndUser(userId: string, month: number) {
+    const year = new Date().getFullYear();
+    const startOfMonth = dayjs()
+      .year(year)
+      .month(month - 1)
+      .startOf('month')
+      .toDate();
+    const endOfMonth = dayjs()
+      .year(year)
+      .month(month - 1)
+      .endOf('month')
+      .toDate();
+
+    const checkIns = await prisma.checkIn.findMany({
+      where: {
+        user_id: userId,
+        validated_at: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
+      },
+    });
+
+    return checkIns.length;
   }
 }

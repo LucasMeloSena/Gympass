@@ -7,4 +7,5 @@ export interface CheckInsRepository {
   findManyByUserId(userId: string, page: number): Promise<CheckIn[]>;
   countByUserId(userId: string): Promise<number>;
   findById(id: string): Promise<CheckIn | null>;
+  findByMonthAndUser(userId: string, month: number): Promise<number>;
 }

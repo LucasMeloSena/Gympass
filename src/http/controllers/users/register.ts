@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { UserAlreadyExistsError } from '@/services/shared/errors/user-already-exists.error';
 import { makeCreateUserUseCase } from '@/services/shared/factories/make-register-user';
 import { Role } from '@prisma/client';
+import { ServerError } from '@/services/shared/errors';
 
 export async function register(req: Request, res: Response, next: NextFunction) {
   try {
@@ -28,7 +29,7 @@ export async function register(req: Request, res: Response, next: NextFunction) 
     res.status(201).json({ message: 'User successfully created.' });
   } catch (err) {
     if (err instanceof UserAlreadyExistsError) {
-      res.status(409).json({ message: err.message });
+      res.status(409).json({ message: err.message, code: ServerError.UserAlreadyExists });
     }
 
     next(err);

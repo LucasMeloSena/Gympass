@@ -26,6 +26,11 @@ export class CreateUserUseCase {
       throw new UserAlreadyExistsError();
     }
 
+    const userWithSamePhone = await this.usersRepository.findByPhone(phone);
+    if (userWithSamePhone) {
+      throw new UserAlreadyExistsError();
+    }
+
     const user = await this.usersRepository.create({
       name,
       email,

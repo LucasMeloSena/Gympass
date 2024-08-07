@@ -19,8 +19,24 @@ export class InMemoryUserRepository implements UserRepository {
     return user;
   }
 
+  async update(user: User) {
+    const userIndex = this.items.findIndex((item) => item.id === user.id);
+
+    if (userIndex >= 0) {
+      this.items[userIndex] = user;
+    }
+
+    return this.items[userIndex];
+  }
+
   async findByEmail(email: string) {
     const user = this.items.find((item) => item.email === email);
+    if (!user) return null;
+    return user;
+  }
+
+  async findByPhone(phone: string) {
+    const user = this.items.find((item) => item.phone === phone);
     if (!user) return null;
     return user;
   }

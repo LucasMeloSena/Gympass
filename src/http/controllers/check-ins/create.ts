@@ -4,7 +4,7 @@ import { makeCheckInUseCase } from '@/services/shared/factories/make-check-in';
 import { ResourceNotFoundError } from '@/services/shared/errors/resource-not-found.error';
 import { MaxDistanceError } from '@/services/shared/errors/max-distance.error';
 import { MaxNumberOfCheckInsError } from '@/services/shared/errors/max-check-ins.error';
-import { Errors } from '@/services/shared/errors';
+import { ServerError } from '@/services/shared/errors';
 
 export async function create(req: Request, res: Response, next: NextFunction) {
   try {
@@ -40,11 +40,11 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     res.status(201).json({ message: 'Check-In successfully created.', checkIn });
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
-      res.status(400).json({ message: err.message, code: Errors.ResourceNotFound });
+      res.status(400).json({ message: err.message, code: ServerError.ResourceNotFound });
     } else if (err instanceof MaxDistanceError) {
-      res.status(400).json({ message: err.message, code: Errors.MaxDistanceForCheckIn });
+      res.status(400).json({ message: err.message, code: ServerError.MaxDistanceForCheckIn });
     } else if (err instanceof MaxNumberOfCheckInsError) {
-      res.status(400).json({ message: err.message, code: Errors.MaxCheckInsNumber });
+      res.status(400).json({ message: err.message, code: ServerError.MaxCheckInsNumber });
     }
     next(err);
   }
