@@ -1,6 +1,6 @@
 import { prisma } from '@/utils/database';
 import { UserRepository } from '../users.repository';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
 export class PrismaUsersRepository implements UserRepository {
   async create(data: Prisma.UserCreateInput) {
@@ -10,10 +10,30 @@ export class PrismaUsersRepository implements UserRepository {
     return user;
   }
 
+  async update(data: User) {
+    const user = await prisma.user.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    });
+
+    return user;
+  }
+
   async findByEmail(email: string) {
     const user = await prisma.user.findUnique({
       where: {
         email,
+      },
+    });
+    return user;
+  }
+
+  async findByPhone(phone: string) {
+    const user = await prisma.user.findUnique({
+      where: {
+        phone,
       },
     });
     return user;

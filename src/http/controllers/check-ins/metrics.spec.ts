@@ -33,7 +33,7 @@ describe('Get User CheckIns Metrics Controller (e2e)', () => {
       adress_addition: 'loja 2',
     });
 
-    await request(app).post(`/gyms/${gymResponse.body.gym.id}/check-ins`).set('Authorization', `Bearer ${token}`).send({
+    const checkInResponse = await request(app).post(`/gyms/${gymResponse.body.gym.id}/check-ins`).set('Authorization', `Bearer ${token}`).send({
       latitude: -19.9760093,
       longitude: -43.9712307,
     });
@@ -48,9 +48,14 @@ describe('Get User CheckIns Metrics Controller (e2e)', () => {
       longitude: -43.9712307,
     });
 
+    vi.useRealTimers();
+    await request(app).patch(`/check-ins/${checkInResponse.body.checkIn.id}/validate`).set('Authorization', `Bearer ${token}`).send();
+
     const response = await request(app).get('/check-ins/metrics').set('Authorization', `Bearer ${token}`).send();
+    const currentMonth = new Date().getMonth();
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.checkInsCount).toBe(2);
+    expect(response.body.checkInsCount).toBe(1);
+    expect(response.body.checkInsCountByMonth[currentMonth].count).toBe(1);
   });
 });

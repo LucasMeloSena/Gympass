@@ -55,4 +55,24 @@ export class InMemoryCheckInRepository implements CheckInsRepository {
     }
     return this.items[checkInIndex];
   }
+
+  async findByMonthAndUser(userId: string, month: number) {
+    const year = new Date().getFullYear();
+    const startOfMonth = dayjs()
+      .year(year)
+      .month(month - 1)
+      .startOf('month')
+      .toDate();
+    const endOfMonth = dayjs()
+      .year(year)
+      .month(month - 1)
+      .endOf('month')
+      .toDate();
+
+    const checkIns = this.items.filter((checkIn) => {
+      return checkIn.user_id === userId && checkIn.validated_at && checkIn.validated_at > startOfMonth && checkIn.validated_at < endOfMonth;
+    });
+
+    return checkIns.length;
+  }
 }

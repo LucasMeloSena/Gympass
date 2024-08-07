@@ -1,4 +1,5 @@
-export enum Errors {
+export enum ServerError {
+  ZodValidationError = 'ZOD_VALIDATION_ERROR',
   InvalidCredentials = 'INVALID_CREDENTIALS',
   LateCheckInValidade = 'LATE_CHECK_IN_VALIDATE',
   MaxCheckInsNumber = 'MAX_CHECK_INS_NUMBER',

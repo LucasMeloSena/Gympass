@@ -49,8 +49,6 @@ describe('Search Gym Controller (e2e)', () => {
       })
       .send();
 
-    console.log(response.body);
-
     expect(response.statusCode).toBe(200);
     expect(response.body.gyms).toHaveLength(1);
     expect(response.body.gyms).toEqual([

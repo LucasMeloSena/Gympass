@@ -6,6 +6,7 @@ import { env } from './env';
 import { gymsRoutes } from './http/controllers/gyms/routes';
 import { checkInsRoutes } from './http/controllers/check-ins/routes';
 import cors from 'cors';
+import { ServerError } from './services/shared/errors';
 
 export const app = express();
 
@@ -14,7 +15,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: env.CLIENT_URL,
     credentials: true,
   }),
 );
@@ -26,6 +27,7 @@ checkInsRoutes(app);
 app.use((err: Error, _req: Request, res: Response, _: NextFunction) => {
   if (err instanceof ZodError) {
     return res.status(400).json({
+      code: ServerError.ZodValidationError,
       message: 'Validation error',
       issues: err.format(),
     });
