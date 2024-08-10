@@ -17,7 +17,8 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
     const subscriptionUseCase = makeCreateSubscription();
 
     switch (event.type) {
-      case 'payment_intent.succeeded':
+      case 'invoice.payment_succeeded':
+        console.log(event.data.object);
         paymentsUseCase.execute({
           payment_id: event.data.object.id,
           amount: event.data.object.amount_received,
@@ -29,7 +30,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
           status: SubscriptionStatus.ACTIVE,
         });
         break;
-      case 'payment_intent.payment_failed':
+      case 'invoice.payment_failed':
         paymentsUseCase.execute({
           payment_id: event.data.object.id,
           amount: event.data.object.amount_received,
