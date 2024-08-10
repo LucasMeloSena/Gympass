@@ -1,5 +1,5 @@
-import { CheckOutStripeRepository } from '@/repositories/stripe/stripe.check-out.repository';
-import { CreatePaymentSessionUseCase } from '@/services/stripe/create';
+import { CheckOutStripeRepository } from '../../../repositories/stripe/stripe.check-out.repository';
+import { CreatePaymentSessionUseCase } from '../../stripe/create';
 
 export function makeStripeCheckout() {
   const StripeRepository = new CheckOutStripeRepository();

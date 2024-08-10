@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeSearchGymByIdUseCase } from '@/services/shared/factories/make-search-gym-by-id';
+import { makeSearchGymByIdUseCase } from '../../../services/shared/factories/make-search-gym-by-id';
 
 export async function searchById(req: Request, res: Response, next: NextFunction) {
   try {

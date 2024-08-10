@@ -4,8 +4,8 @@ import { create } from './create';
 import { validate } from './validate';
 import { history } from './history';
 import { metrics } from './metrics';
-import { verifyUserRole } from '@/http/middlewares/verify-user-role';
 import { Role } from '@prisma/client';
+import { verifyUserRole } from '../../middlewares/verify-user-role';
 
 export async function checkInsRoutes(app: Express) {
   app.get('/check-ins/history', verifyJWT, history);

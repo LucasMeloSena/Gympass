@@ -1,5 +1,5 @@
-import { PrismaPaymentsRepository } from '@/repositories/prisma/prisma.payments.repository';
-import { CreatePaymentUseCase } from '@/services/payment/create';
+import { PrismaPaymentsRepository } from '../../../repositories/prisma/prisma.payments.repository';
+import { CreatePaymentUseCase } from '../../payment/create';
 
 export function makeCreatePayments() {
   const paymentsRepository = new PrismaPaymentsRepository();

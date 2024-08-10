@@ -1,9 +1,9 @@
-import { ReqUser } from '@/@types/express';
-import { env } from '@/env';
-import { MissingAuthHeaderError } from '@/services/shared/errors/missing-auth-header.error';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { CustomPayload } from '../controllers/users/authenticate';
+import { MissingAuthHeaderError } from '../../services/shared/errors/missing-auth-header.error';
+import { ReqUser } from '../../@types/express';
+import { env } from '../../env';
 
 export async function verifyJWT(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;

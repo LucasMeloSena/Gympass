@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { InvalidCredentialsError } from '@/services/shared/errors/invalid-credentials.error';
-import { makeAuthenticateUseCase } from '@/services/shared/factories/make-authenticate';
 import { jwtSignIn } from '../../middlewares/verify-jwt';
 import { Role } from '@prisma/client';
+import { makeAuthenticateUseCase } from '../../../services/shared/factories/make-authenticate';
+import { InvalidCredentialsError } from '../../../services/shared/errors/invalid-credentials.error';
 
 export interface CustomPayload {
   role: Role;

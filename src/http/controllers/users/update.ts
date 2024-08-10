@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeUpdateUserUseCase } from '@/services/shared/factories/make-update';
-import { ResourceNotFoundError } from '@/services/shared/errors/resource-not-found.error';
+import { makeUpdateUserUseCase } from '../../../services/shared/factories/make-update';
+import { ResourceNotFoundError } from '../../../services/shared/errors/resource-not-found.error';
 
 export async function update(req: Request, res: Response, next: NextFunction) {
   try {

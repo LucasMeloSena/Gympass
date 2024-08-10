@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeCreateGymUseCase } from '@/services/shared/factories/make-create-gym';
+import { makeCreateGymUseCase } from '../../../services/shared/factories/make-create-gym';
 
 export async function create(req: Request, res: Response, next: NextFunction) {
   try {

@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { z } from 'zod';
-import { makeGetUserProfileUseCase } from '@/services/shared/factories/make-get-user-profile';
-import { env } from '@/env';
-import { CheckOutSessionError } from '@/services/shared/errors/check-out-session.error';
-import { ServerError } from '@/services/shared/errors';
-import { ActiveSubscriptionError } from '@/services/shared/errors/active-subscription.error';
-import { makeStripeCheckout } from '@/services/shared/factories/make-stripe-checkout';
+import { makeGetUserProfileUseCase } from '../../../services/shared/factories/make-get-user-profile';
+import { makeStripeCheckout } from '../../../services/shared/factories/make-stripe-checkout';
+import { CheckOutSessionError } from '../../../services/shared/errors/check-out-session.error';
+import { ActiveSubscriptionError } from '../../../services/shared/errors/active-subscription.error';
+import { ServerError } from '../../../services/shared/errors';
+import { env } from 'process';
 
 export async function create(req: Request, res: Response, next: NextFunction) {
   try {

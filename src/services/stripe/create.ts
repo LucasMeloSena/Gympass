@@ -1,4 +1,4 @@
-import { StripeRepository } from '@/repositories/stripe.repository';
+import { StripeRepository } from '../../repositories/stripe.repository';
 import { CheckOutSessionError } from '../shared/errors/check-out-session.error';
 
 interface CreatePaymentSessionUseCaseRequest {

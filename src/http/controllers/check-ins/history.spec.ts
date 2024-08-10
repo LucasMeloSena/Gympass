@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
-import { app } from '@/app';
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
 import { Role } from '@prisma/client';
+import { createAndAuthenticateUser } from '../../../utils/test/create-and-authenticate-user';
+import { app } from '../../../app';
 
 describe('Get CheckIn History Controller (e2e)', () => {
   beforeAll(() => {

@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { describe, expect, it } from 'vitest';
-import { app } from '@/app';
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
 import { Role } from '@prisma/client';
+import { createAndAuthenticateUser } from '../../../utils/test/create-and-authenticate-user';
+import { app } from '../../../app';
 
 describe('Search Gym Controller (e2e)', () => {
   it('should be able to search gyms', async () => {

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { makeGetUserProfileUseCase } from '@/services/shared/factories/make-get-user-profile';
-import { ResourceNotFoundError } from '@/services/shared/errors/resource-not-found.error';
-import { ReqUser } from '@/@types/express';
+import { makeGetUserProfileUseCase } from '../../../services/shared/factories/make-get-user-profile';
+import { ReqUser } from '../../../@types/express';
+import { ResourceNotFoundError } from '../../../services/shared/errors/resource-not-found.error';
 
 export async function profile(req: Request, res: Response, next: NextFunction) {
   try {

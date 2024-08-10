@@ -1,5 +1,5 @@
-import { SubscriptionsRepository } from '@/repositories/subscription.repository';
 import { SubscriptionStatus } from '@prisma/client';
+import { SubscriptionsRepository } from '../../repositories/subscription.repository';
 
 export interface CreateSubscriptionUseCaseRequest {
   user_id: string;

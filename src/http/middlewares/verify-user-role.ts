@@ -1,6 +1,6 @@
-import { ReqUser } from '@/@types/express';
 import { Role } from '@prisma/client';
 import { Request, Response, NextFunction } from 'express';
+import { ReqUser } from '../../@types/express';
 
 export function verifyUserRole(roleToVerify: Role) {
   return async (req: Request, res: Response, next: NextFunction) => {

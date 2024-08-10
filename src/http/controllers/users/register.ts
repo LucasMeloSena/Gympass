@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { UserAlreadyExistsError } from '@/services/shared/errors/user-already-exists.error';
-import { makeCreateUserUseCase } from '@/services/shared/factories/make-register-user';
 import { Role } from '@prisma/client';
-import { ServerError } from '@/services/shared/errors';
+import { makeCreateUserUseCase } from '../../../services/shared/factories/make-register-user';
+import { UserAlreadyExistsError } from '../../../services/shared/errors/user-already-exists.error';
+import { ServerError } from '../../../services/shared/errors';
 
 export async function register(req: Request, res: Response, next: NextFunction) {
   try {

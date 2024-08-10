@@ -1,9 +1,9 @@
-import { env } from '@/env';
-import { makeCreatePayments } from '@/services/shared/factories/make-payments';
-import { makeCreateSubscription } from '@/services/shared/factories/make-subscriptions';
 import { PaymentStatus, SubscriptionStatus } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 import Stripe from 'stripe';
+import { makeCreatePayments } from '../../../services/shared/factories/make-payments';
+import { makeCreateSubscription } from '../../../services/shared/factories/make-subscriptions';
+import { env } from '../../../env';
 
 export async function webHook(req: Request, res: Response, next: NextFunction) {
   try {

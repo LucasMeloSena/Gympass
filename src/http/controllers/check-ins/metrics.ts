@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { makeGetUserMetricsUseCase } from '@/services/shared/factories/make-get-user-metrics';
-import { ReqUser } from '@/@types/express';
+import { ReqUser } from '../../../@types/express';
+import { makeGetUserMetricsUseCase } from '../../../services/shared/factories/make-get-user-metrics';
 
 export async function metrics(req: Request, res: Response, next: NextFunction) {
   try {

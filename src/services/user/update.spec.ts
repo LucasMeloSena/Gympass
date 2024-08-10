@@ -1,7 +1,7 @@
 import { expect, describe, it, beforeEach } from 'vitest';
 import { compare, hash } from 'bcryptjs';
-import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user.repository';
 import { UpdateUserUseCase } from './update';
+import { InMemoryUserRepository } from '../../repositories/in-memory/in-memory-user.repository';
 
 let usersRepository: InMemoryUserRepository;
 let sut: UpdateUserUseCase;
@@ -21,11 +21,13 @@ describe('Update User Use Case', () => {
     });
 
     const { user } = await sut.execute({
-      id: createdUser.id,
-      name: 'John Doe II',
-      email: 'johndoe2@example.com',
-      password: '12345678',
-      phone: '(31) 9 0000-0001',
+      user: {
+        id: createdUser.id,
+        name: 'John Doe II',
+        email: 'johndoe2@example.com',
+        password_hash: '12345678',
+        phone: '(31) 9 0000-0001',
+      },
     });
     expect(user.name).toBe('John Doe II');
   });
@@ -39,11 +41,13 @@ describe('Update User Use Case', () => {
     });
 
     const { user } = await sut.execute({
-      id: createdUser.id,
-      name: 'John Doe',
-      email: 'johndoe@example.com',
-      password: '123456',
-      phone: '(31) 9 0000-0000',
+      user: {
+        id: createdUser.id,
+        name: 'John Doe II',
+        email: 'johndoe2@example.com',
+        password_hash: '12345678',
+        phone: '(31) 9 0000-0001',
+      },
     });
 
     const isPasswordCorrectlyHash = await compare('123456', user.password_hash);

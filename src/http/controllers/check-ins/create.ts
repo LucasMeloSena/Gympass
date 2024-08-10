@@ -1,10 +1,10 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeCheckInUseCase } from '@/services/shared/factories/make-check-in';
-import { ResourceNotFoundError } from '@/services/shared/errors/resource-not-found.error';
-import { MaxDistanceError } from '@/services/shared/errors/max-distance.error';
-import { MaxNumberOfCheckInsError } from '@/services/shared/errors/max-check-ins.error';
-import { ServerError } from '@/services/shared/errors';
+import { makeCheckInUseCase } from '../../../services/shared/factories/make-check-in';
+import { ResourceNotFoundError } from '../../../services/shared/errors/resource-not-found.error';
+import { ServerError } from '../../../services/shared/errors';
+import { MaxDistanceError } from '../../../services/shared/errors/max-distance.error';
+import { MaxNumberOfCheckInsError } from '../../../services/shared/errors/max-check-ins.error';
 
 export async function create(req: Request, res: Response, next: NextFunction) {
   try {

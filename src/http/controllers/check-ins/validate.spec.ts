@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { describe, expect, it } from 'vitest';
-import { app } from '@/app';
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
 import { Role } from '@prisma/client';
+import { app } from '../../../app';
+import { createAndAuthenticateUser } from '../../../utils/test/create-and-authenticate-user';
 
 describe('Validate CheckIn Controller (e2e)', () => {
   it('should be able to validate a check-in', async () => {

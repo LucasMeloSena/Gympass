@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import { CreateCheckOutSession, StripeRepository } from '../stripe.repository';
-import { env } from '@/env';
-import { ActiveSubscriptionError } from '@/services/shared/errors/active-subscription.error';
+import { env } from '../../env';
+import { ActiveSubscriptionError } from '../../services/shared/errors/active-subscription.error';
 
 export class CheckOutStripeRepository implements StripeRepository {
   private stripe: Stripe;

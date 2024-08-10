@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { env } from '@/env';
-import { jwtSignIn } from '@/http/middlewares/verify-jwt';
-import { ReqUser } from '@/@types/express';
+import { jwtSignIn } from '../../middlewares/verify-jwt';
+import { env } from '../../../env';
+import { ReqUser } from '../../../@types/express';
 
 export async function refresh(req: Request, res: Response, _: NextFunction) {
   const oldRefreshToken = req.cookies.refreshToken;
