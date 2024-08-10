@@ -7,4 +7,6 @@ export enum ServerError {
   MissingAuthHeader = 'MISSING_AUTH_HEADER',
   ResourceNotFound = 'RESOURCE_NOT_FOUND',
   UserAlreadyExists = 'USER_ALREADY_EXISTS',
+  CheckOutSessionError = 'CHECK_OUT_SESSION_ERROR',
+  ActiveSubscription = 'ACTIVE_SUBSCRIPTION',
 }
