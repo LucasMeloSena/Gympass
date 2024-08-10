@@ -6,10 +6,10 @@ import { ResourceNotFoundError } from '@/services/shared/errors/resource-not-fou
 export async function update(req: Request, res: Response, next: NextFunction) {
   try {
     const updateBodySchema = z.object({
-      name: z.string().min(3),
-      email: z.string().email(),
-      password: z.string().min(6).nullable(),
-      phone: z.string().min(16).max(16),
+      name: z.string().min(3).optional(),
+      email: z.string().email().optional(),
+      password: z.string().min(6).optional(),
+      phone: z.string().min(16).max(16).optional(),
     });
 
     const userIdSchema = z.object({
@@ -21,11 +21,13 @@ export async function update(req: Request, res: Response, next: NextFunction) {
 
     const updateUserUseCase = makeUpdateUserUseCase();
     await updateUserUseCase.execute({
-      id: sub,
-      name,
-      email,
-      password,
-      phone,
+      user: {
+        id: sub,
+        name,
+        email,
+        password_hash: password,
+        phone,
+      },
     });
 
     res.status(200).json({ message: 'User successfully updated.' });

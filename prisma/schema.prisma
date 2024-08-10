@@ -13,14 +13,16 @@ enum Role {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String         @id @default(uuid())
   name          String
-  email         String    @unique
+  email         String         @unique
   password_hash String
-  phone         String    @unique
-  role          Role      @default(MEMBER)
-  created_at    DateTime  @default(now())
+  phone         String         @unique
+  role          Role           @default(MEMBER)
+  created_at    DateTime       @default(now())
   checkIns      CheckIn[]
+  Payment       Payment[]
+  Subscription  Subscription[]
 
   @@map("users")
 }
@@ -57,4 +59,48 @@ model CheckIn {
   gym_id String
 
   @@map("check_ins")
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESSED
+  FAILED
+  CANCELED
+}
+
+model Payment {
+  id         String        @id @default(uuid())
+  payment_id String        @unique
+  amount     Int
+  status     PaymentStatus
+  created_at DateTime      @default(now())
+
+  subscription    Subscription? @relation(fields: [subscription_id], references: [id])
+  subscription_id String?
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("payments")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+  EXPIRED
+}
+
+model Subscription {
+  id         String             @id @default(uuid())
+  status     SubscriptionStatus
+  created_at DateTime           @default(now())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  payments Payment[]
+
+  @@map("subscriptions")
 }

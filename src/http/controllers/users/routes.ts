@@ -14,5 +14,5 @@ export async function userRoutes(app: Express) {
 
   // AUTHENTICATED
   app.get('/me', verifyJWT, profile);
-  app.put('/update/user', verifyJWT, update);
+  app.patch('/update/user', verifyJWT, update);
 }

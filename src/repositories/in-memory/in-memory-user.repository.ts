@@ -23,7 +23,8 @@ export class InMemoryUserRepository implements UserRepository {
     const userIndex = this.items.findIndex((item) => item.id === user.id);
 
     if (userIndex >= 0) {
-      this.items[userIndex] = user;
+      const updatedUser = { ...this.items[userIndex], ...user };
+      this.items[userIndex] = updatedUser;
     }
 
     return this.items[userIndex];

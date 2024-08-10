@@ -7,6 +7,8 @@ import { gymsRoutes } from './http/controllers/gyms/routes';
 import { checkInsRoutes } from './http/controllers/check-ins/routes';
 import cors from 'cors';
 import { ServerError } from './services/shared/errors';
+import { paymentCheckOutRoutes } from './http/controllers/stripe/routes';
+import { webHook } from './http/controllers/stripe/web-hook';
 
 export const app = express();
 
@@ -23,6 +25,9 @@ app.use(
 userRoutes(app);
 gymsRoutes(app);
 checkInsRoutes(app);
+paymentCheckOutRoutes(app);
+
+app.post('/webhook', express.raw({ type: 'application/json' }), webHook);
 
 app.use((err: Error, _req: Request, res: Response, _: NextFunction) => {
   if (err instanceof ZodError) {

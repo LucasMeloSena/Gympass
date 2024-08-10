@@ -1,14 +1,16 @@
 import { UserRepository } from '@/repositories/users.repository';
 import { hash } from 'bcryptjs';
-import { ResourceNotFoundError } from '../shared/errors/resource-not-found.error';
 import { User } from '@prisma/client';
+import { ResourceNotFoundError } from '../shared/errors/resource-not-found.error';
 
-interface UpdateUserUseCaseRequest {
-  id: string;
-  name: string;
-  email: string;
-  password: string | null;
-  phone: string;
+export interface UpdateUserUseCaseRequest {
+  user: {
+    id: string;
+    name?: string;
+    email?: string;
+    password_hash?: string;
+    phone?: string;
+  };
 }
 
 interface UpdateUserUseCaseResponse {
@@ -18,23 +20,21 @@ interface UpdateUserUseCaseResponse {
 export class UpdateUserUseCase {
   constructor(private usersRepository: UserRepository) {}
 
-  async execute({ id, name, email, password, phone }: UpdateUserUseCaseRequest): Promise<UpdateUserUseCaseResponse> {
-    const user = await this.usersRepository.findById(id);
-    if (!user) throw new ResourceNotFoundError();
+  async execute({ user }: UpdateUserUseCaseRequest): Promise<UpdateUserUseCaseResponse> {
+    const userInfo = await this.usersRepository.findById(user.id);
+    if (!userInfo) throw new ResourceNotFoundError();
 
-    if (!password) {
-      user.name = name;
-      user.email = email;
-      user.phone = phone;
-    } else {
-      const password_hash = await hash(password, 6);
-      user.name = name;
-      user.email = email;
-      user.password_hash = password_hash;
-      user.phone = phone;
+    if (user.password_hash) {
+      user.password_hash = await hash(user.password_hash, 6);
     }
 
-    const updatedUser = await this.usersRepository.update(user);
+    const newUserData = {
+      ...userInfo,
+      ...user,
+      id: user.id,
+    };
+
+    const updatedUser = await this.usersRepository.update(newUserData);
     return { user: updatedUser };
   }
 }
