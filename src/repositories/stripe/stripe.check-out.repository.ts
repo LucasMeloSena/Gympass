@@ -11,6 +11,7 @@ export class CheckOutStripeRepository implements StripeRepository {
   }
 
   async createCheckOutSession(data: CreateCheckOutSession) {
+    console.log(data.user);
     const existingCustomer = await this.stripe.customers.list({
       email: data.user.email,
       limit: 1,

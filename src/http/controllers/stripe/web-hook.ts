@@ -18,7 +18,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
 
     switch (event.type) {
       case 'invoice.payment_succeeded': {
-        const userId = event.data.object.metadata?.user_id.toString();
+        const userId = event.data.object.metadata?.user_id;
         if (!userId) throw new Error();
 
         paymentsUseCase.execute({
@@ -28,13 +28,13 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
           user_id: userId,
         });
         subscriptionUseCase.execute({
-          user_id: event.data.object.metadata?.user_id.toString() ?? '',
+          user_id: userId,
           status: SubscriptionStatus.ACTIVE,
         });
         break;
       }
       case 'invoice.payment_failed': {
-        const userId = event.data.object.metadata?.user_id.toString();
+        const userId = event.data.object.metadata?.user_id;
         if (!userId) throw new Error();
 
         paymentsUseCase.execute({
