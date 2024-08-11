@@ -19,7 +19,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
     switch (event.type) {
       case 'invoice.payment_succeeded': {
         console.log(event.data.object);
-        const userId = event.data.object.metadata?.user_id;
+        const userId = event.data.object.subscription_details?.metadata?.user_id;
         if (!userId) throw new Error();
 
         paymentsUseCase.execute({
