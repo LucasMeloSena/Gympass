@@ -39,7 +39,7 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
     return res.status(200).json({ token });
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
-      res.status(400).json({ message: err.message });
+      return res.status(400).json({ message: err.message });
     }
 
     next(err);

@@ -12,7 +12,7 @@ import { webHook } from './http/controllers/stripe/web-hook';
 
 export const app = express();
 
-app.use(express.json());
+// app.use(express.json());
 app.use(cookieParser());
 
 app.use(
