@@ -7,8 +7,10 @@ export interface CreateSubscriptionUseCaseRequest {
 }
 
 export interface CreateSubscriptionUseCaseResponse {
+  id: string;
   user_id: string;
   status: SubscriptionStatus;
+  created_at: Date;
 }
 
 export class CreateSubscriptionUseCase {

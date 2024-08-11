@@ -6,6 +6,7 @@ export interface CreatePaymentUseCaseRequest {
   payment_id: string;
   amount: number;
   status: PaymentStatus;
+  subscription_id: string | null;
 }
 
 export interface CreatePaymentUseCaseResponse {
@@ -13,13 +14,14 @@ export interface CreatePaymentUseCaseResponse {
   payment_id: string;
   amount: number;
   status: PaymentStatus;
+  subscription_id: string | null;
 }
 
 export class CreatePaymentUseCase {
   constructor(private paymentsRepository: PaymentsRepository) {}
 
-  async execute({ payment_id, amount, status, user_id }: CreatePaymentUseCaseRequest): Promise<CreatePaymentUseCaseResponse> {
-    const payment = await this.paymentsRepository.create({ payment_id, amount, status, user_id });
+  async execute({ payment_id, amount, status, user_id, subscription_id }: CreatePaymentUseCaseRequest): Promise<CreatePaymentUseCaseResponse> {
+    const payment = await this.paymentsRepository.create({ payment_id, amount, status, user_id, subscription_id });
     return payment;
   }
 }

@@ -22,15 +22,17 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         const userId = event.data.object.subscription_details?.metadata?.user_id;
         if (!userId) throw new Error();
 
-        paymentsUseCase.execute({
+        const subscription = await subscriptionUseCase.execute({
+          user_id: userId,
+          status: SubscriptionStatus.ACTIVE,
+        });
+
+        await paymentsUseCase.execute({
           payment_id: event.data.object.id,
           amount: event.data.object.amount_paid / 100,
           status: PaymentStatus.SUCCESSED,
           user_id: userId,
-        });
-        subscriptionUseCase.execute({
-          user_id: userId,
-          status: SubscriptionStatus.ACTIVE,
+          subscription_id: subscription.id,
         });
         break;
       }
@@ -38,11 +40,12 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         const userId = event.data.object.metadata?.user_id;
         if (!userId) throw new Error();
 
-        paymentsUseCase.execute({
+        await paymentsUseCase.execute({
           payment_id: event.data.object.id,
           amount: event.data.object.amount_paid / 100,
           status: PaymentStatus.FAILED,
           user_id: userId,
+          subscription_id: null,
         });
         break;
       }
@@ -50,7 +53,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         console.error(`Unhandled event type ${event.type}`);
     }
 
-    res.json({ received: true });
+    res.status(200).json({ message: 'Webhook processed successfully' });
   } catch (err) {
     return res.status(400).json({ message: (err as Error).message });
     next(err);
