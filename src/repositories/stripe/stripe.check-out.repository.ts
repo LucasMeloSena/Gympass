@@ -11,7 +11,6 @@ export class CheckOutStripeRepository implements StripeRepository {
   }
 
   async createCheckOutSession(data: CreateCheckOutSession) {
-    console.log(data.user);
     const existingCustomer = await this.stripe.customers.list({
       email: data.user.email,
       limit: 1,
@@ -50,8 +49,10 @@ export class CheckOutStripeRepository implements StripeRepository {
       mode: 'subscription',
       success_url: data.success_url,
       cancel_url: data.cancel_url,
-      metadata: {
-        user_id: data.user.id,
+      payment_intent_data: {
+        metadata: {
+          user_id: data.user.id,
+        },
       },
     });
 
