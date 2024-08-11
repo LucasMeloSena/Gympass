@@ -12,7 +12,9 @@ import { webHook } from './http/controllers/stripe/web-hook';
 
 export const app = express();
 
-// app.use(express.json());
+app.post('/webhook', express.raw({ type: 'application/json' }), webHook);
+
+app.use(express.json());
 app.use(cookieParser());
 
 app.use(
@@ -26,8 +28,6 @@ userRoutes(app);
 gymsRoutes(app);
 checkInsRoutes(app);
 paymentCheckOutRoutes(app);
-
-app.post('/webhook', express.raw({ type: 'application/json' }), webHook);
 
 app.use((err: Error, _req: Request, res: Response, _: NextFunction) => {
   if (err instanceof ZodError) {
