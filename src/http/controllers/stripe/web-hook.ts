@@ -24,7 +24,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
 
         paymentsUseCase.execute({
           payment_id: event.data.object.id,
-          amount: event.data.object.amount_paid,
+          amount: event.data.object.amount_paid / 100,
           status: PaymentStatus.SUCCESSED,
           user_id: userId,
         });
@@ -40,7 +40,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
 
         paymentsUseCase.execute({
           payment_id: event.data.object.id,
-          amount: event.data.object.amount_paid,
+          amount: event.data.object.amount_paid / 100,
           status: PaymentStatus.FAILED,
           user_id: userId,
         });

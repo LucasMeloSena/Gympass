@@ -49,7 +49,7 @@ export class CheckOutStripeRepository implements StripeRepository {
       mode: 'subscription',
       success_url: data.success_url,
       cancel_url: data.cancel_url,
-      payment_intent_data: {
+      subscription_data: {
         metadata: {
           user_id: data.user.id,
         },
