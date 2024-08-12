@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeUpdateUserUseCase } from '../../../services/shared/factories/make-update';
+import { makeUpdateUserUseCase } from '../../../services/shared/factories/user/make-update';
 import { ResourceNotFoundError } from '../../../services/shared/errors/resource-not-found.error';
+import { makeUpdateStripeUser } from '../../../services/shared/factories/stripe/make-update-stripe-user';
 
 export async function update(req: Request, res: Response, next: NextFunction) {
   try {
@@ -18,6 +19,13 @@ export async function update(req: Request, res: Response, next: NextFunction) {
 
     const { sub } = userIdSchema.parse(req.user);
     const { name, email, password, phone } = updateBodySchema.parse(req.body);
+
+    const updateStripeCostumerUseCase = makeUpdateStripeUser();
+    await updateStripeCostumerUseCase.execute({
+      id: sub,
+      name,
+      email,
+    });
 
     const updateUserUseCase = makeUpdateUserUseCase();
     await updateUserUseCase.execute({

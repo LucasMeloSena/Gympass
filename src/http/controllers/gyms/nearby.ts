@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeFetchNearbyGymsUseCase } from '../../../services/shared/factories/make-fetch-nearby-gyms';
+import { makeFetchNearbyGymsUseCase } from '../../../services/shared/factories/gym/make-fetch-nearby-gyms';
 
 export async function nearby(req: Request, res: Response, next: NextFunction) {
   try {

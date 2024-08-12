@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { makeGetUserProfileUseCase } from '../../../services/shared/factories/make-get-user-profile';
+import { makeGetUserProfileUseCase } from '../../../services/shared/factories/user/make-get-user-profile';
 import { ReqUser } from '../../../@types/express';
 import { ResourceNotFoundError } from '../../../services/shared/errors/resource-not-found.error';
 

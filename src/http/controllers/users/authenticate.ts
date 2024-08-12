@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
 import { jwtSignIn } from '../../middlewares/verify-jwt';
 import { Role } from '@prisma/client';
-import { makeAuthenticateUseCase } from '../../../services/shared/factories/make-authenticate';
+import { makeAuthenticateUseCase } from '../../../services/shared/factories/user/make-authenticate';
 import { InvalidCredentialsError } from '../../../services/shared/errors/invalid-credentials.error';
 
 export interface CustomPayload {

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeCheckInUseCase } from '../../../services/shared/factories/make-check-in';
+import { makeCheckInUseCase } from '../../../services/shared/factories/check-in/make-check-in';
 import { ResourceNotFoundError } from '../../../services/shared/errors/resource-not-found.error';
 import { ServerError } from '../../../services/shared/errors';
 import { MaxDistanceError } from '../../../services/shared/errors/max-distance.error';

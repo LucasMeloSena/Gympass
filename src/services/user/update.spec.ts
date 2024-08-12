@@ -50,7 +50,7 @@ describe('Update User Use Case', () => {
       },
     });
 
-    const isPasswordCorrectlyHash = await compare('123456', user.password_hash);
+    const isPasswordCorrectlyHash = await compare('12345678', user.password_hash);
     expect(isPasswordCorrectlyHash).toBe(true);
   });
 });

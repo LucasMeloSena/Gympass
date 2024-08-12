@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
 import { ReqUser } from '../../../@types/express';
-import { makeFetchCheckInUserHistoryUseCase } from '../../../services/shared/factories/make-fetch-check-in-history';
+import { makeFetchCheckInUserHistoryUseCase } from '../../../services/shared/factories/check-in/make-fetch-check-in-history';
 
 export async function history(req: Request, res: Response, next: NextFunction) {
   try {

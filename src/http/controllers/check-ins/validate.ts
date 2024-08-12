@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeValidateCheckInUseCase } from '../../../services/shared/factories/make-validate-check-in';
+import { makeValidateCheckInUseCase } from '../../../services/shared/factories/check-in/make-validate-check-in';
 import { ResourceNotFoundError } from '../../../services/shared/errors/resource-not-found.error';
 import { LateCheckInValidateError } from '../../../services/shared/errors/late-check-in-validate.error';
 

@@ -1,4 +1,4 @@
-import { SubscriptionStatus } from '@prisma/client';
+import { Subscription, SubscriptionStatus } from '@prisma/client';
 import { SubscriptionsRepository } from '../../repositories/subscription.repository';
 
 export interface CreateSubscriptionUseCaseRequest {
@@ -7,10 +7,7 @@ export interface CreateSubscriptionUseCaseRequest {
 }
 
 export interface CreateSubscriptionUseCaseResponse {
-  id: string;
-  user_id: string;
-  status: SubscriptionStatus;
-  created_at: Date;
+  subscription: Subscription;
 }
 
 export class CreateSubscriptionUseCase {
@@ -18,6 +15,6 @@ export class CreateSubscriptionUseCase {
 
   async execute({ status, user_id }: CreateSubscriptionUseCaseRequest): Promise<CreateSubscriptionUseCaseResponse> {
     const subscription = await this.subscriptionsRepository.create({ status, user_id });
-    return subscription;
+    return { subscription };
   }
 }

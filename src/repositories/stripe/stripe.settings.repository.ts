@@ -1,9 +1,9 @@
 import Stripe from 'stripe';
-import { CreateCheckOutSession, StripeRepository } from '../stripe.repository';
+import { CreateCheckOutSession, StripeRepository, UpdateCustomer } from '../stripe.repository';
 import { env } from '../../env';
 import { ActiveSubscriptionError } from '../../services/shared/errors/active-subscription.error';
 
-export class CheckOutStripeRepository implements StripeRepository {
+export class StripeSettingsRepository implements StripeRepository {
   private stripe: Stripe;
 
   constructor() {
@@ -57,5 +57,12 @@ export class CheckOutStripeRepository implements StripeRepository {
     });
 
     return session.url;
+  }
+
+  async updateCostumer(id: string, data: Partial<UpdateCustomer>) {
+    await this.stripe.customers.update(id, {
+      email: data.email,
+      name: data.name,
+    });
   }
 }

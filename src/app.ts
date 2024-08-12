@@ -9,6 +9,7 @@ import cors from 'cors';
 import { ServerError } from './services/shared/errors';
 import { paymentCheckOutRoutes } from './http/controllers/stripe/routes';
 import { webHook } from './http/controllers/stripe/web-hook';
+import { subscriptionRoutes } from './http/controllers/subscriptions/routes';
 
 export const app = express();
 
@@ -28,6 +29,7 @@ userRoutes(app);
 gymsRoutes(app);
 checkInsRoutes(app);
 paymentCheckOutRoutes(app);
+subscriptionRoutes(app);
 
 app.use((err: Error, _req: Request, res: Response, _: NextFunction) => {
   if (err instanceof ZodError) {

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
 import { Role } from '@prisma/client';
-import { makeCreateUserUseCase } from '../../../services/shared/factories/make-register-user';
+import { makeCreateUserUseCase } from '../../../services/shared/factories/user/make-register-user';
 import { UserAlreadyExistsError } from '../../../services/shared/errors/user-already-exists.error';
 import { ServerError } from '../../../services/shared/errors';
 

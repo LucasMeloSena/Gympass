@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { NextFunction, Request, Response } from 'express';
-import { makeSearchGymsUseCase } from '../../../services/shared/factories/make-search-gyms';
+import { makeSearchGymsUseCase } from '../../../services/shared/factories/gym/make-search-gyms';
 
 export async function search(req: Request, res: Response, next: NextFunction) {
   try {

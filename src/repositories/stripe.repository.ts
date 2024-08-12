@@ -16,6 +16,12 @@ export interface CreateCheckOutSession {
   cancel_url: string;
 }
 
+export interface UpdateCustomer {
+  name: string;
+  email: string;
+}
+
 export interface StripeRepository {
   createCheckOutSession(data: CreateCheckOutSession): Promise<string | null>;
+  updateCostumer(id: string, data: Partial<UpdateCustomer>): Promise<void>;
 }
