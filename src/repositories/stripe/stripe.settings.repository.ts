@@ -27,16 +27,16 @@ export class StripeSettingsRepository implements StripeRepository {
       customerId = existingCustomer.data[0].id;
     }
 
-    const subscriptions = await this.stripe.subscriptions.list({
-      customer: customerId,
-      status: 'all',
-    });
+    // const subscriptions = await this.stripe.subscriptions.list({
+    //   customer: customerId,
+    //   status: 'all',
+    // });
 
-    const existingSubscription = subscriptions.data.find((subscription) => subscription.items.data.some((item) => item.price.id === env.PRICE_ID));
+    // const existingSubscription = subscriptions.data.find((subscription) => subscription.items.data.some((item) => item.price.id === env.PRICE_ID));
 
-    if (existingSubscription) {
-      throw new ActiveSubscriptionError();
-    }
+    // if (existingSubscription) {
+    //   throw new ActiveSubscriptionError();
+    // }
 
     const session = await this.stripe.checkout.sessions.create({
       customer: customerId,

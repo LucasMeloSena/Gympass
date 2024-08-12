@@ -60,26 +60,32 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         if (!userId) throw new ResourceNotFoundError();
         const paymentId = event.data.object.payment_intent;
         if (!paymentId) throw new ResourceNotFoundError();
+        const subscriptionId = event.data.object.subscription;
+        if (!subscriptionId) throw new ResourceNotFoundError();
 
-        const subscription = event.data.object.subscription;
-        console.log(subscription);
-        if (!subscription) {
+        if (event.data.object.billing_reason === 'subscription_create') {
+          const { subscription } = await createSubscriptionUseCase.execute({
+            user_id: userId,
+            subscription_id: subscriptionId.toString(),
+            status: SubscriptionStatus.UNPAID,
+          });
+
           await createPaymentsUseCase.execute({
             payment_id: paymentId.toString(),
             amount: event.data.object.amount_paid / 100,
             status: PaymentStatus.FAILED,
             user_id: userId,
-            subscription_id: null,
+            subscription_id: subscription.id,
           });
         } else {
-          await updateSubscriptionUseCase.execute({ subscriptionId: subscription.toString(), status: SubscriptionStatus.UNPAID });
+          await updateSubscriptionUseCase.execute({ subscriptionId: subscriptionId.toString(), status: SubscriptionStatus.UNPAID });
 
           await createPaymentsUseCase.execute({
             payment_id: paymentId.toString(),
             amount: event.data.object.amount_paid / 100,
             status: PaymentStatus.FAILED,
             user_id: userId,
-            subscription_id: subscription.toString(),
+            subscription_id: subscriptionId.toString(),
           });
         }
         break;
