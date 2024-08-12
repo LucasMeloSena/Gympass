@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { makeGetUserProfileUseCase } from '../../../services/shared/factories/user/make-get-user-profile';
 import { makeStripeCheckout } from '../../../services/shared/factories/stripe/make-stripe-checkout';
 import { CheckOutSessionError } from '../../../services/shared/errors/check-out-session.error';
-import { ActiveSubscriptionError } from '../../../services/shared/errors/active-subscription.error';
 import { ServerError } from '../../../services/shared/errors';
 import { env } from 'process';
 
@@ -34,8 +33,6 @@ export async function create(req: Request, res: Response, next: NextFunction) {
   } catch (err) {
     if (err instanceof CheckOutSessionError) {
       return res.status(400).json({ message: err.message, code: ServerError.CheckOutSessionError });
-    } else if (err instanceof ActiveSubscriptionError) {
-      return res.status(400).json({ message: err.message, code: ServerError.ActiveSubscription });
     }
 
     next(err);

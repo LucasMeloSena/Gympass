@@ -15,6 +15,7 @@ export class VerifySubscriptionStatusUseCase {
   constructor(private subscriptionRepository: SubscriptionsRepository) {}
 
   async execute({ userId }: VerifyStatusRequest): Promise<VerifyStatusResponse> {
+    console.log(userId);
     const subscription = await this.subscriptionRepository.findByUserId(userId);
 
     if (!subscription) throw new ResourceNotFoundError();

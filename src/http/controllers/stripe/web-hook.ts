@@ -72,7 +72,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
 
           await createPaymentsUseCase.execute({
             payment_id: paymentId.toString(),
-            amount: event.data.object.amount_paid / 100,
+            amount: event.data.object.amount_due / 100,
             status: PaymentStatus.FAILED,
             user_id: userId,
             subscription_id: subscription.id,
@@ -82,7 +82,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
 
           await createPaymentsUseCase.execute({
             payment_id: paymentId.toString(),
-            amount: event.data.object.amount_paid / 100,
+            amount: event.data.object.amount_due / 100,
             status: PaymentStatus.FAILED,
             user_id: userId,
             subscription_id: subscriptionId.toString(),

@@ -24,9 +24,10 @@ describe('Subscription Use Case', () => {
       phone: '(31) 9 0000-0000',
     });
 
-    const subscription = await sut.execute({
+    const { subscription } = await sut.execute({
       status: SubscriptionStatus.ACTIVE,
       user_id: user.id,
+      subscription_id: 'subscription_id_001',
     });
 
     expect(subscription).toHaveProperty('id');

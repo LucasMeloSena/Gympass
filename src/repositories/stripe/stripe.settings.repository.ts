@@ -1,7 +1,6 @@
 import Stripe from 'stripe';
 import { CreateCheckOutSession, StripeRepository, UpdateCustomer } from '../stripe.repository';
 import { env } from '../../env';
-import { ActiveSubscriptionError } from '../../services/shared/errors/active-subscription.error';
 
 export class StripeSettingsRepository implements StripeRepository {
   private stripe: Stripe;
@@ -26,17 +25,6 @@ export class StripeSettingsRepository implements StripeRepository {
     } else {
       customerId = existingCustomer.data[0].id;
     }
-
-    // const subscriptions = await this.stripe.subscriptions.list({
-    //   customer: customerId,
-    //   status: 'all',
-    // });
-
-    // const existingSubscription = subscriptions.data.find((subscription) => subscription.items.data.some((item) => item.price.id === env.PRICE_ID));
-
-    // if (existingSubscription) {
-    //   throw new ActiveSubscriptionError();
-    // }
 
     const session = await this.stripe.checkout.sessions.create({
       customer: customerId,

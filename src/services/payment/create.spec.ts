@@ -30,6 +30,7 @@ describe('Payment Use Case', () => {
     const subscription = await subscriptionRepository.create({
       status: SubscriptionStatus.ACTIVE,
       user_id: user.id,
+      subscription_id: 'subscription_id_001',
     });
 
     const payment = await sut.execute({

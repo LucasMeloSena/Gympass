@@ -27,6 +27,7 @@ describe('Verify Subscription Status Use Case', () => {
     await subscriptionRepository.create({
       status: SubscriptionStatus.ACTIVE,
       user_id: user.id,
+      subscription_id: 'subscription_id_001',
     });
 
     const { subscription, isValid } = await sut.execute({ userId: user.id });
