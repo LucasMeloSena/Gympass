@@ -25,20 +25,20 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         if (!userId) throw new ResourceNotFoundError();
         const subscriptionId = event.data.object.subscription;
         if (!subscriptionId) throw new ResourceNotFoundError();
+        const paymentId = event.data.object.payment_intent;
+        if (!paymentId) throw new ResourceNotFoundError();
 
         if (event.data.object.billing_reason !== 'subscription_create') {
-          console.log('antiga');
           await updateSubscriptionUseCase.execute({ subscriptionId: subscriptionId.toString(), status: SubscriptionStatus.ACTIVE });
 
           await createPaymentsUseCase.execute({
-            payment_id: event.data.object.id,
+            payment_id: paymentId.toString(),
             amount: event.data.object.amount_paid / 100,
             status: PaymentStatus.SUCCESSED,
             user_id: userId,
             subscription_id: subscriptionId.toString(),
           });
         } else {
-          console.log('nova');
           const { subscription } = await createSubscriptionUseCase.execute({
             user_id: userId,
             subscription_id: subscriptionId.toString(),
@@ -46,7 +46,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
           });
 
           await createPaymentsUseCase.execute({
-            payment_id: event.data.object.id,
+            payment_id: paymentId.toString(),
             amount: event.data.object.amount_paid / 100,
             status: PaymentStatus.SUCCESSED,
             user_id: userId,
@@ -58,11 +58,14 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
       case 'invoice.payment_failed': {
         const userId = event.data.object.subscription_details?.metadata?.user_id;
         if (!userId) throw new ResourceNotFoundError();
+        const paymentId = event.data.object.payment_intent;
+        if (!paymentId) throw new ResourceNotFoundError();
 
         const subscription = event.data.object.subscription;
+        console.log(subscription);
         if (!subscription) {
           await createPaymentsUseCase.execute({
-            payment_id: event.data.object.id,
+            payment_id: paymentId.toString(),
             amount: event.data.object.amount_paid / 100,
             status: PaymentStatus.FAILED,
             user_id: userId,
@@ -72,7 +75,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
           await updateSubscriptionUseCase.execute({ subscriptionId: subscription.toString(), status: SubscriptionStatus.UNPAID });
 
           await createPaymentsUseCase.execute({
-            payment_id: event.data.object.id,
+            payment_id: paymentId.toString(),
             amount: event.data.object.amount_paid / 100,
             status: PaymentStatus.FAILED,
             user_id: userId,
