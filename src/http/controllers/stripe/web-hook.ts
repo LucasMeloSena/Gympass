@@ -27,6 +27,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         if (!subscriptionId) throw new ResourceNotFoundError();
 
         if (event.data.object.billing_reason === 'subscription_create') {
+          console.log('antiga');
           await updateSubscriptionUseCase.execute({ subscriptionId: subscriptionId.toString(), status: SubscriptionStatus.ACTIVE });
 
           await createPaymentsUseCase.execute({
@@ -37,12 +38,10 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
             subscription_id: subscriptionId.toString(),
           });
         } else {
-          const newStripeSubscription = event.data.object.subscription;
-          if (!newStripeSubscription) throw new ResourceNotFoundError();
-
+          console.log('nova');
           const { subscription } = await createSubscriptionUseCase.execute({
             user_id: userId,
-            subscription_id: newStripeSubscription.toString(),
+            subscription_id: subscriptionId.toString(),
             status: SubscriptionStatus.ACTIVE,
           });
 
@@ -59,6 +58,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
       case 'invoice.payment_failed': {
         const userId = event.data.object.subscription_details?.metadata?.user_id;
         if (!userId) throw new ResourceNotFoundError();
+
         const subscription = event.data.object.subscription;
         if (!subscription) {
           await createPaymentsUseCase.execute({
