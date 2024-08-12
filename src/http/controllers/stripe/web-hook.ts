@@ -26,7 +26,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         const subscriptionId = event.data.object.subscription;
         if (!subscriptionId) throw new ResourceNotFoundError();
 
-        if (event.data.object.billing_reason === 'subscription_create') {
+        if (event.data.object.billing_reason !== 'subscription_create') {
           console.log('antiga');
           await updateSubscriptionUseCase.execute({ subscriptionId: subscriptionId.toString(), status: SubscriptionStatus.ACTIVE });
 
