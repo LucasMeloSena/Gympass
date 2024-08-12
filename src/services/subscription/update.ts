@@ -1,35 +1,29 @@
-// import { Subscription } from '@prisma/client';
-// import { ResourceNotFoundError } from '../shared/errors/resource-not-found.error';
-// import dayjs from 'dayjs';
-// import { LateCheckInValidateError } from '../shared/errors/late-check-in-validate.error';
-// import { SubscriptionsRepository } from '../../repositories/subscription.repository';
+import { Subscription, SubscriptionStatus } from '@prisma/client';
+import { ResourceNotFoundError } from '../shared/errors/resource-not-found.error';
+import { SubscriptionsRepository } from '../../repositories/subscription.repository';
 
-// interface UpdateSubscriptionUseCaseRequest {
-//   subscriptionId: string;
-// }
+interface UpdateSubscriptionUseCaseRequest {
+  subscriptionId: string;
+  status: SubscriptionStatus;
+}
 
-// interface UpdateSubscriptionUseCaseResponse {
-//   subscription: Subscription;
-// }
+interface UpdateSubscriptionUseCaseResponse {
+  subscription: Subscription;
+}
 
-// export class UpdateSubscriptionUseCase {
-//   constructor(private subscriptionRepository: SubscriptionsRepository) {}
+export class UpdateSubscriptionUseCase {
+  constructor(private subscriptionRepository: SubscriptionsRepository) {}
 
-//   async execute({ subscriptionId }: UpdateSubscriptionUseCaseRequest): Promise<UpdateSubscriptionUseCaseResponse> {
-//     const subscription = await this.subscriptionRepository.findById(checkInId);
+  async execute({ subscriptionId, status }: UpdateSubscriptionUseCaseRequest): Promise<UpdateSubscriptionUseCaseResponse> {
+    const subscription = await this.subscriptionRepository.findByStripeId(subscriptionId);
 
-//     if (!checkIn) throw new ResourceNotFoundError();
+    if (!subscription) throw new ResourceNotFoundError();
 
-//     checkIn.validated_at = new Date();
+    subscription.status = status;
+    await this.subscriptionRepository.update(subscription);
 
-//     const distanceInMinutesFromCheckInCreation = dayjs(new Date()).diff(checkIn.created_at, 'minutes');
-
-//     if (distanceInMinutesFromCheckInCreation > 20) throw new LateCheckInValidateError();
-
-//     await this.checkInsRepository.save(checkIn);
-
-//     return {
-//       checkIn,
-//     };
-//   }
-// }
+    return {
+      subscription,
+    };
+  }
+}

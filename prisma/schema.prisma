@@ -93,9 +93,10 @@ enum SubscriptionStatus {
 }
 
 model Subscription {
-  id         String             @id @default(uuid())
-  status     SubscriptionStatus
-  created_at DateTime           @default(now())
+  id              String             @id @default(uuid())
+  subscription_id String             @unique
+  status          SubscriptionStatus
+  created_at      DateTime           @default(now())
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String @unique

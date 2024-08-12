@@ -5,6 +5,7 @@ import { makeCreatePayments } from '../../../services/shared/factories/payment/m
 import { makeCreateSubscription } from '../../../services/shared/factories/subscription/make-subscriptions';
 import { env } from '../../../env';
 import { ResourceNotFoundError } from '../../../services/shared/errors/resource-not-found.error';
+import { makeUpdateSubscription } from '../../../services/shared/factories/subscription/make-update';
 
 export async function webHook(req: Request, res: Response, next: NextFunction) {
   try {
@@ -16,6 +17,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
     const event = stripe.webhooks.constructEvent(req.body, signature, env.ENDPOINT_SECRET);
     const createPaymentsUseCase = makeCreatePayments();
     const createSubscriptionUseCase = makeCreateSubscription();
+    const updateSubscriptionUseCase = makeUpdateSubscription();
 
     switch (event.type) {
       case 'invoice.payment_succeeded': {
@@ -28,6 +30,8 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         });
 
         if (existingSubscription) {
+          await updateSubscriptionUseCase.execute({ subscriptionId: existingSubscription.data[0].id, status: SubscriptionStatus.ACTIVE });
+
           await createPaymentsUseCase.execute({
             payment_id: event.data.object.id,
             amount: event.data.object.amount_paid / 100,
@@ -36,8 +40,11 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
             subscription_id: existingSubscription.data[0].id,
           });
         } else {
+          const newStripeSubscription = event.data.object.subscription;
+          if (!newStripeSubscription) throw new ResourceNotFoundError();
           const { subscription } = await createSubscriptionUseCase.execute({
             user_id: userId,
+            subscription_id: newStripeSubscription.toString(),
             status: SubscriptionStatus.ACTIVE,
           });
 
@@ -56,7 +63,6 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         if (!userId) throw new ResourceNotFoundError();
 
         const subscription = event.data.object.subscription;
-        console.log(subscription);
         if (!subscription) {
           await createPaymentsUseCase.execute({
             payment_id: event.data.object.id,
@@ -66,7 +72,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
             subscription_id: null,
           });
         } else {
-          // update subscription
+          await updateSubscriptionUseCase.execute({ subscriptionId: subscription.toString(), status: SubscriptionStatus.UNPAID });
 
           await createPaymentsUseCase.execute({
             payment_id: event.data.object.id,
@@ -79,7 +85,8 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
         break;
       }
       case 'customer.subscription.deleted': {
-        console.log();
+        const subscriptionId = event.data.object.id;
+        await updateSubscriptionUseCase.execute({ subscriptionId, status: SubscriptionStatus.CANCELED });
         break;
       }
       default:
