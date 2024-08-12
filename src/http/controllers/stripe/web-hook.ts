@@ -11,6 +11,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
   try {
     const stripe = new Stripe(env.STRIPE_KEY);
     const signature = req.headers['stripe-signature'];
+    console.log(signature);
     if (!signature) {
       throw new ResourceNotFoundError();
     }
@@ -22,6 +23,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
     switch (event.type) {
       case 'invoice.payment_succeeded': {
         const userId = event.data.object.subscription_details?.metadata?.user_id;
+        console.log(userId);
         if (!userId) throw new ResourceNotFoundError();
 
         const existingSubscription = await stripe.subscriptions.list({
@@ -40,8 +42,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
             subscription_id: existingSubscription.data[0].id,
           });
         } else {
-          const newStripeSubscription = event.data.object.id;
-          console.log(newStripeSubscription);
+          const newStripeSubscription = event.data.object.subscription;
           if (!newStripeSubscription) throw new ResourceNotFoundError();
           const { subscription } = await createSubscriptionUseCase.execute({
             user_id: userId,
