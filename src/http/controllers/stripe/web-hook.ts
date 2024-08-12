@@ -23,27 +23,23 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
       case 'invoice.payment_succeeded': {
         const userId = event.data.object.subscription_details?.metadata?.user_id;
         if (!userId) throw new ResourceNotFoundError();
+        const subscriptionId = event.data.object.subscription;
+        if (!subscriptionId) throw new ResourceNotFoundError();
 
-        const existingSubscription = await stripe.subscriptions.list({
-          customer: event.data.object.customer?.toString(),
-          limit: 1,
-        });
-
-        console.log(existingSubscription.data);
-
-        if (existingSubscription.data.length > 0) {
-          await updateSubscriptionUseCase.execute({ subscriptionId: existingSubscription.data[0].id, status: SubscriptionStatus.ACTIVE });
+        if (event.data.object.billing_reason === 'subscription_create') {
+          await updateSubscriptionUseCase.execute({ subscriptionId: subscriptionId.toString(), status: SubscriptionStatus.ACTIVE });
 
           await createPaymentsUseCase.execute({
             payment_id: event.data.object.id,
             amount: event.data.object.amount_paid / 100,
             status: PaymentStatus.SUCCESSED,
             user_id: userId,
-            subscription_id: existingSubscription.data[0].id,
+            subscription_id: subscriptionId.toString(),
           });
         } else {
           const newStripeSubscription = event.data.object.subscription;
           if (!newStripeSubscription) throw new ResourceNotFoundError();
+
           const { subscription } = await createSubscriptionUseCase.execute({
             user_id: userId,
             subscription_id: newStripeSubscription.toString(),
@@ -63,7 +59,6 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
       case 'invoice.payment_failed': {
         const userId = event.data.object.subscription_details?.metadata?.user_id;
         if (!userId) throw new ResourceNotFoundError();
-
         const subscription = event.data.object.subscription;
         if (!subscription) {
           await createPaymentsUseCase.execute({
