@@ -41,6 +41,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
           });
         } else {
           const newStripeSubscription = event.data.object.subscription;
+          console.log(newStripeSubscription);
           if (!newStripeSubscription) throw new ResourceNotFoundError();
           const { subscription } = await createSubscriptionUseCase.execute({
             user_id: userId,
