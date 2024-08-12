@@ -29,9 +29,7 @@ export async function webHook(req: Request, res: Response, next: NextFunction) {
           limit: 1,
         });
 
-        if (existingSubscription) {
-          console.log(event.data.object.subscription);
-          console.log(existingSubscription.data[0].id);
+        if (existingSubscription.data.length > 0) {
           await updateSubscriptionUseCase.execute({ subscriptionId: existingSubscription.data[0].id, status: SubscriptionStatus.ACTIVE });
 
           await createPaymentsUseCase.execute({
