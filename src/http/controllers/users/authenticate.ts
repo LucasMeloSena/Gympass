@@ -4,7 +4,6 @@ import { jwtSignIn } from '../../middlewares/verify-jwt';
 import { Role } from '@prisma/client';
 import { makeAuthenticateUseCase } from '../../../services/shared/factories/user/make-authenticate';
 import { InvalidCredentialsError } from '../../../services/shared/errors/invalid-credentials.error';
-import { env } from '../../../env';
 
 export interface CustomPayload {
   role: Role;
@@ -33,8 +32,8 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       path: '/',
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: false,
+      sameSite: 'strict',
     });
 
     return res.status(200).json({ token });
