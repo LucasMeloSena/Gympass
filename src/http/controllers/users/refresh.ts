@@ -6,6 +6,7 @@ import { ReqUser } from '../../../@types/express';
 
 export async function refresh(req: Request, res: Response, _: NextFunction) {
   const oldRefreshToken = req.cookies.refreshToken;
+  console.log(oldRefreshToken);
 
   if (oldRefreshToken) {
     const payload = jwt.verify(oldRefreshToken, env.JWT_SECRET) as ReqUser;
@@ -17,8 +18,8 @@ export async function refresh(req: Request, res: Response, _: NextFunction) {
     res.cookie('refreshToken', newRefreshToken, {
       httpOnly: true,
       path: '/',
-      secure: true,
-      sameSite: true,
+      secure: env.NODE_ENV === 'production',
+      sameSite: 'lax',
     });
 
     return res.status(200).json({ token });
