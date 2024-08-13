@@ -4,7 +4,7 @@ import { makeGetUserProfileUseCase } from '../../../services/shared/factories/us
 import { makeStripeCheckout } from '../../../services/shared/factories/stripe/make-stripe-checkout';
 import { CheckOutSessionError } from '../../../services/shared/errors/check-out-session.error';
 import { ServerError } from '../../../services/shared/errors';
-import { env } from 'process';
+import { env } from '../../../env';
 
 export async function create(req: Request, res: Response, next: NextFunction) {
   try {
@@ -25,7 +25,7 @@ export async function create(req: Request, res: Response, next: NextFunction) {
         email: user.email,
       },
       quantity: 1,
-      success_url: `${env.CLIENT_URL}/dashboard`,
+      success_url: env.NODE_ENV === 'dev' ? `${env.CLIENT_URL}/dashboard?redirect=stripe` : `${env.CLIENT_URL}/dashboard`,
       cancel_url: `${env.CLIENT_URL}/plans`,
     });
 
