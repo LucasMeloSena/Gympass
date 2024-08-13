@@ -11,7 +11,7 @@ export async function refresh(req: Request, res: Response, _: NextFunction) {
     const payload = jwt.verify(oldRefreshToken, env.JWT_SECRET) as ReqUser;
 
     const userId = payload.sub?.toString() ?? '';
-    const token = jwtSignIn({ role: payload.role, userId }, '30s');
+    const token = jwtSignIn({ role: payload.role, userId }, '1m');
     const newRefreshToken = jwtSignIn({ role: payload.role, userId }, '7d');
 
     res.cookie('refreshToken', newRefreshToken, {
