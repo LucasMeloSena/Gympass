@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Role } from '@prisma/client';
 import { makeCreateUserUseCase } from '../../../services/shared/factories/user/make-register-user';
 import { UserAlreadyExistsError } from '../../../services/shared/errors/user-already-exists.error';
-import { ServerError } from '../../../services/shared/errors';
+import { ServerError } from '../../../services/shared/errors/_index';
 
 export async function register(req: Request, res: Response, next: NextFunction) {
   try {

@@ -8,7 +8,7 @@ import { PaymentStatus, SubscriptionStatus } from '@prisma/client';
 
 export async function webHookLocal(req: Request, res: Response, next: NextFunction) {
   try {
-    if (env.NODE_ENV === 'dev') {
+    if (env.NODE_ENV === 'dev' || env.NODE_ENV === 'test') {
       const userIdSchema = z.object({
         sub: z.string().uuid(),
       });

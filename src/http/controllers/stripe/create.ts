@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { makeGetUserProfileUseCase } from '../../../services/shared/factories/user/make-get-user-profile';
 import { makeStripeCheckout } from '../../../services/shared/factories/stripe/make-stripe-checkout';
 import { CheckOutSessionError } from '../../../services/shared/errors/check-out-session.error';
-import { ServerError } from '../../../services/shared/errors';
+import { ServerError } from '../../../services/shared/errors/_index';
 import { env } from '../../../env';
 
 export async function create(req: Request, res: Response, next: NextFunction) {

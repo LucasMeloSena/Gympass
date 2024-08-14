@@ -30,6 +30,15 @@ export class InMemoryUserRepository implements UserRepository {
     return this.items[userIndex];
   }
 
+  async updatePass(email: string, password: string) {
+    const userIndex = this.items.findIndex((item) => item.email === email);
+
+    if (userIndex >= 0) {
+      this.items[userIndex].password_hash = password;
+    }
+    return this.items[userIndex];
+  }
+
   async findByEmail(email: string) {
     const user = this.items.find((item) => item.email === email);
     if (!user) return null;

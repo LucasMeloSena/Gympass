@@ -6,7 +6,7 @@ import { env } from './env';
 import { gymsRoutes } from './http/controllers/gyms/routes';
 import { checkInsRoutes } from './http/controllers/check-ins/routes';
 import cors from 'cors';
-import { ServerError } from './services/shared/errors';
+import { ServerError } from './services/shared/errors/_index';
 import { paymentCheckOutRoutes } from './http/controllers/stripe/routes';
 import { webHook } from './http/controllers/stripe/web-hook';
 import { subscriptionRoutes } from './http/controllers/subscriptions/routes';

@@ -6,4 +6,5 @@ export interface UserRepository {
   findByPhone(phone: string): Promise<User | null>;
   findById(id: string): Promise<User | null>;
   update(data: User): Promise<User>;
+  updatePass(email: string, password: string): Promise<User>;
 }

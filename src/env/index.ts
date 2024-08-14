@@ -9,6 +9,11 @@ const envSchema = z.object({
   STRIPE_KEY: z.string(),
   PRICE_ID: z.string(),
   ENDPOINT_SECRET: z.string(),
+  EMAIL_USER: z.string(),
+  EMAIL_PASS: z.string(),
+  EMAIL_HOST: z.string(),
+  EMAIL_PORT: z.coerce.number(),
+  PASSWORD_SECRET: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);
