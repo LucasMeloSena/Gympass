@@ -66,6 +66,9 @@ module.exports = {
           DEFAULT: '#FFF0F0',
           foreground: '#E60000',
         },
+        grayLight: {
+          DEFAULT: "#f5f5f5"
+        }
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
