@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -18,6 +18,7 @@ const signInForm = z.object({
 export type SignInForm = z.infer<typeof signInForm>
 
 export function SignIn() {
+  const navigate = useNavigate()
   const mutation = useAuthenticateUser('/sessions')
 
   const {
@@ -39,7 +40,7 @@ export function SignIn() {
       store.dispatch(loginSuccess())
 
       toast.success('Autenticação realizada com sucesso!')
-      window.location.replace('/plans')
+      navigate('/plans', {replace: true})
     } catch (err) {
       toast.error('Credenciais inválidas!')
     }
