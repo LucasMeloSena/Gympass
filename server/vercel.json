@@ -12,5 +12,5 @@
       "dest": "src/server.ts"
     }
   ],
-  "public": "public"
+  "public": true
 }
