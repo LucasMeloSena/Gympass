@@ -17,7 +17,6 @@ app.post('/webhook', express.raw({ type: 'application/json' }), webHook);
 
 app.use(express.json());
 app.use(cookieParser());
-
 app.use(
   cors({
     origin: env.CLIENT_URL,
