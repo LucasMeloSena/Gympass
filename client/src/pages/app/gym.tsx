@@ -27,7 +27,7 @@ export function GymInfo() {
       />
       <div className="flex flex-col items-center justify-center">
         <h1 className="font-poppins text-2xl font-semibold">{data?.name}</h1>
-        <h4 className="font-poppins text-base text-muted-foreground p-6">
+        <h4 className="p-6 font-poppins text-base text-muted-foreground">
           {data?.description}
         </h4>
       </div>

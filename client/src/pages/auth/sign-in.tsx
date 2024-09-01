@@ -40,7 +40,7 @@ export function SignIn() {
       store.dispatch(loginSuccess())
 
       toast.success('Autenticação realizada com sucesso!')
-      navigate('/plans', {replace: true})
+      navigate('/plans', { replace: true })
     } catch (err) {
       toast.error('Credenciais inválidas!')
     }
