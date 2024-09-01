@@ -19,3 +19,15 @@ jobs:
 
       - run: npm ci
       - run: npm run test
+        env:
+          JWT_SECRET: testing
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/apisolid?schema=public"
+          CLIENT_URL: "http://localhost:5173"
+          STRIPE_KEY: "key",
+          PRICE_ID: "id",
+          ENDPOINT_SECRET: "secret",
+          EMAIL_USER: ${{ secrets.EMAIL_USER }},
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+          PASSWORD_SECRET: "password"
