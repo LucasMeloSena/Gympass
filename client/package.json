@@ -11,8 +11,8 @@
     "lint:eslint:fix": "eslint . --fix",
     "lint:prettier:fix": "prettier --write .",
     "preview": "vite preview",
-    "test": "vitest",
-    "test:e2e": "npx playwright test",
+    "test": "vitest run --dir src",
+    "test:e2e": "npx playwright test --project=chromium",
     "test:e2e:report": "npx playwright show-report",
     "test:e2e:ui": "npx playwright test --ui"
   },
