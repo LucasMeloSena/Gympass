@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "postinstall": "prisma generate && npx prisma migrate deploy",
+    "postinstall": "npx prisma generate && if [ \"$RUN_MIGRATIONS\" = \"true\" ]; then npx prisma migrate deploy; fi",
     "start:dev": "tsx watch src/server.ts",
     "start:prod": "node build/server.js",
     "build": "tsup src --out-dir build",
