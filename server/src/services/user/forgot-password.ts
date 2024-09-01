@@ -3,7 +3,6 @@ import { UserRepository } from '../../repositories/users.repository';
 import { generateRandomNumbers } from '../../utils/scripts/generate-random-number';
 import { EmailRepository } from '../../repositories/email.repository';
 import { buildEmail } from '../../utils/email';
-import path from 'node:path';
 
 interface ForgotPasswordUseCaseRequest {
   email: string;
@@ -25,9 +24,7 @@ export class ForgotPasswordUseCase {
 
     const code = generateRandomNumbers();
 
-    const emailTemplatePath = path.join(process.cwd(), 'app.js');
-    console.log(emailTemplatePath);
-    const content = await buildEmail(emailTemplatePath, code, email, 'Gymsign - Recuperação de senha');
+    const content = await buildEmail(code, email, 'Gymsign - Recuperação de senha');
     if (!content) throw new Error();
 
     this.emailRepository.send(content);
