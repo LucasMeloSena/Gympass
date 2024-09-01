@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import { env } from '../env';
 import { EmailData } from '../repositories/email.repository';
 import fs from 'node:fs';
+import ejs from 'ejs';
 
 export const transporter = nodemailer.createTransport({
   host: env.EMAIL_HOST,
@@ -13,16 +14,21 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
-export async function buildEmail(templatePath: string, code: string, dataToReplace: string, to: string, subject: string): Promise<EmailData | null> {
+export async function buildEmail(templatePath: string, code: string, to: string, subject: string): Promise<EmailData | null> {
   try {
-    const data = fs.readFileSync(templatePath, 'utf8');
-    const emailHtml = data.replace(dataToReplace, code);
+    const codeObject = { AUTH_CODE: code };
+
+    const renderTemplate = (templatePath: string, data: Record<string, string>) => {
+      const template = fs.readFileSync(templatePath, 'utf-8');
+      return ejs.render(template, data);
+    };
+    const htmlContent = renderTemplate(templatePath, codeObject);
 
     return {
       from: env.EMAIL_USER,
       to,
       subject,
-      html: emailHtml,
+      html: htmlContent,
     };
   } catch (err) {
     console.log(err);

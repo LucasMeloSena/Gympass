@@ -25,8 +25,8 @@ export class ForgotPasswordUseCase {
 
     const code = generateRandomNumbers();
 
-    const emailTemplatePath = path.resolve(process.cwd(), 'utils/html/email-template.html');
-    const content = await buildEmail(emailTemplatePath, code, '{{AUTH_CODE}}', email, 'Gymsign - Recuperação de senha');
+    const emailTemplatePath = path.resolve(process.cwd(), 'src/utils/templates/email-template.ejs');
+    const content = await buildEmail(emailTemplatePath, code, email, 'Gymsign - Recuperação de senha');
     console.log(content);
     if (!content) throw new Error();
 
