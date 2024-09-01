@@ -94,8 +94,7 @@ export async function buildEmail(code: string, to: string, subject: string): Pro
     </html>
       `,
     };
-  } catch (err) {
-    console.log(err);
+  } catch (_) {
     return null;
   }
 }

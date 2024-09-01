@@ -27,7 +27,7 @@ export class ForgotPasswordUseCase {
     const content = await buildEmail(code, email, 'Gymsign - Recuperação de senha');
     if (!content) throw new Error();
 
-    this.emailRepository.send(content);
+    await this.emailRepository.send(content);
 
     return {
       code,
