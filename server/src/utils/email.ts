@@ -22,6 +22,7 @@ export async function buildEmail(templatePath: string, code: string, to: string,
       const template = fs.readFileSync(templatePath, 'utf-8');
       return ejs.render(template, data);
     };
+
     const htmlContent = renderTemplate(templatePath, codeObject);
 
     return {
