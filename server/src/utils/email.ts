@@ -24,7 +24,8 @@ export async function buildEmail(templatePath: string, code: string, dataToRepla
       subject,
       html: emailHtml,
     };
-  } catch (_) {
+  } catch (err) {
+    console.log(err);
     return null;
   }
 }
